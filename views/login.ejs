@@ -1,0 +1,16 @@
+<%- include("./layout/header.ejs") %>
+<%- include("./layout/navbar.ejs") %>
+
+<div class="container" >
+    <form method="post" action="/login" class="form">
+        <h2>Login</h2>
+        <label for="username">Brugernavn</label>
+        <input type="text" name="username" id="username" value="<%= username %>">
+        <label for="password">Adgangskode</label>
+        <input type="password" name="password" id="password">
+        <p class="error"><%= error %> </p>
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+<%- include("./layout/footer.ejs") %>

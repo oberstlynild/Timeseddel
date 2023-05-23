@@ -1,0 +1,68 @@
+<%- include("./layout/header.ejs") %>
+<%- include("./layout/navbar.ejs") %>
+
+<div class="container">
+    <form method="post" action="/overview" class="user-select">
+        <% if(role=== "admin") { %>
+            <select name="selectedUser" id="selected-user">
+                <% users.map(user => { %>
+                    <% if(selectedUser.username === user.username) { %>
+                        <option selected value="<%= user.id %>"><%= user.username %></option>
+                    <% } else { %>
+                        <option value="<%= user.id %>"><%= user.username %></option>
+                        <% }}) %> 
+                    </select>
+                <input type="submit" value="Søg">
+        <% } %> 
+    </form>
+    <div class="table-container">
+        <h2>Timesedler - <%= new Date(Date.now()).toLocaleString('default', { month: 'long' , year: "2-digit"})%></h2>
+        <table>
+            <tr>
+                <th>Start</th><th>Slut</th><th>Timer</th><th>Rediger</th>
+            </tr>
+            <% moment.defaultFormat = "Do MMM HH[:]mm" %>
+                <% 
+                let totalDuration = moment.duration();
+                let itemHours = 0;
+                let itemMinutes = 0;
+                let totalHours = 0;
+                let totalMinutes = 0;
+                data.forEach(timeseddel=> { 
+                    let start = moment(timeseddel.start)
+                    let end = moment(timeseddel.end)
+                    let duration = moment.duration(end.diff(start))
+                    itemHours = duration.hours();
+                    itemMinutes = duration.minutes();
+                    if (duration.days() >= 1) {
+                        itemHours += 24 * duration.days();
+                    }
+                    totalDuration.add(duration);
+                    totalHours = 24 * totalDuration.days() + totalDuration.hours();
+                    totalMinutes = totalDuration.minutes();
+                %>
+
+                <tr>
+                    <td><%= start.format() %></td>
+                    <td><%= end.format() %></td>
+                    <td><%= itemHours.toString().padStart(2, "0") + ":" + itemMinutes.toString().padStart(2, "0") %></td>
+                    <td>
+                        <a href="/edit/<%= timeseddel.id %>" class="edit" title="Rediger">&#9998</a>
+                        <form method="post" action="/delete/<%= timeseddel.id %>/<%= selectedUser.id %>?_method=DELETE">
+                            <input type="submit" class="delete" title="Slet" value="&#10005">
+                        </form> 
+                    </td>
+                </tr>
+                        
+                <% }) %>
+                <tr>
+                    <th>Total</th>
+                    <td></td>
+                    <td><%= totalHours.toString().padStart(2, "0") + ":" + totalMinutes.toString().padStart(2, "0") %></td>
+                    <td></td>
+                </tr>
+                
+        </table>
+    </div>
+</div>
+<%- include("./layout/footer.ejs") %>

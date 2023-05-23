@@ -1,0 +1,21 @@
+<%- include("./layout/header.ejs") %>
+<%- include("./layout/navbar.ejs") %>
+
+<div class="container">
+    <form method="post" action="/new-user" class="form" autocomplete="off">
+        <h2>Ny Bruger</h2>
+        <label for="username">Brugernavn</label>
+        <input type="text" name="username" id="username">
+        <label for="password">Adgangskode</label>
+        <input type="password" name="password" id="password">
+        <label for="role">Type</label>
+        <select id="role" name="role" id="role">
+            <option value="bruger">Bruger</option>
+            <option value="admin">Admin</option>
+        </select>
+        <p class="error"><%= error %></p>
+        <input type="submit" value="Tilføj">
+    </form>
+</div>
+
+<%- include("./layout/footer.ejs") %>

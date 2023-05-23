@@ -1,0 +1,17 @@
+<header>
+    <nav>
+        <ul>
+            <li><a href="/">Hjem</a></li>
+            <% if(loggedIn){
+                if(role === "admin"){ %>
+                    <li><a href="/new-user">Ny bruger</a></li>
+                <% } %>
+                <li><a href="/overview">Tidligere sedler</a></li>
+                <li><a href="/new">Ny timeseddel</a></li>
+                <li><a href="/logout">Log ud</a></li>
+            <% } else{ %>
+                <li><a href="/login">Login</a></li>
+            <% } %> 
+        </ul>
+    </nav>
+</header> 

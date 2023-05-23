@@ -1,0 +1,15 @@
+<%- include("./layout/header.ejs") %>
+<%- include("./layout/navbar.ejs") %>
+
+<div class="container">
+    <form method="post" action="/new" class="form">
+        <h2>Ny timeseddel</h2>
+        <label for="start">Start</label>
+        <input type="datetime-local" name="start" id="start">
+        <label for="end">Slut</label>
+        <input type="datetime-local" name="end" id="end">
+        <input type="submit" value="Tilføj">
+    </form>
+</div>
+
+<%- include("./layout/footer.ejs") %>
